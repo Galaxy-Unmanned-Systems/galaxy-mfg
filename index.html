@@ -103,8 +103,6 @@
     transition: all .2s;
     cursor: pointer;
     background: transparent;
-    text-decoration: none;
-    display: inline-block;
   }
   .nav-cta:hover { border-color: var(--accent); color: var(--accent); }
   .nav.solid .nav-cta { color: var(--ink); border-color: var(--line-2); }
@@ -190,10 +188,11 @@
   .hero h1 {
     font-family: var(--display);
     font-weight: 900;
-    font-size: clamp(56px, 9vw, 132px);
+    font-size: clamp(48px, 7.4vw, 108px);
     line-height: 0.92;
     letter-spacing: -0.035em;
-    margin: 0 0 28px;
+    margin: 0 0 22px;
+    max-width: 720px;
   }
   .hero h1 .accent {
     color: var(--accent);
@@ -223,7 +222,6 @@
     transition: all .2s;
     display: inline-flex;
     align-items: center;
-    text-decoration: none;
     gap: 12px;
   }
   .btn-primary {
@@ -238,6 +236,49 @@
   }
   .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
   .btn .arrow { font-family: var(--mono); font-size: 14px; }
+
+  /* Hero globe */
+  .hero-globe {
+    position: absolute;
+    right: max(32px, calc((100vw - 1280px) / 2 + 32px));
+    top: 50%;
+    transform: translateY(-50%);
+    width: 540px;
+    height: 540px;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.95;
+    filter: drop-shadow(0 0 80px rgba(77,166,255,0.25));
+  }
+  .hero-globe svg { width: 100%; height: 100%; overflow: visible; }
+  .globe-sphere { fill: url(#globeFill); stroke: #4da6ff; stroke-width: 1.2; opacity: 0.95; }
+  .globe-sphere-outer { fill: none; stroke: #4da6ff; stroke-width: 0.4; stroke-dasharray: 2 3; opacity: 0.35; }
+  .globe-graticule { fill: none; stroke: #4da6ff; stroke-width: 0.55; opacity: 0.45; }
+  .globe-country { fill: rgba(77,166,255,0.18); stroke: #4da6ff; stroke-width: 0.55; opacity: 0.9; }
+  .globe-country.usa { fill: rgba(77,166,255,0.6); stroke: #ffffff; stroke-width: 0.8; opacity: 0.98; }
+  .globe-state { fill: rgba(255,255,255,0.05); stroke: rgba(255,255,255,0.35); stroke-width: 0.3; }
+  .globe-state.tx { fill: #ffffff; stroke: #ffffff; opacity: 0.95; }
+  .globe-tick { stroke: #4da6ff; stroke-width: 1; opacity: 0.7; }
+  .globe-corner { stroke: #4da6ff; stroke-width: 1.2; fill: none; opacity: 0.7; }
+  .globe-mono { font-family: var(--mono); font-size: 9px; fill: rgba(77,166,255,0.85); letter-spacing: 0.2em; text-transform: uppercase; }
+  .globe-mono.dim { fill: rgba(77,166,255,0.5); }
+  .globe-label-line { stroke: #4da6ff; stroke-width: 0.6; opacity: 0.7; fill: none; }
+  .fw-glow { fill: #4da6ff; opacity: 0.55; filter: blur(2.5px); animation: fwGlow 2.6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+  .fw-pulse { fill: none; stroke: #4da6ff; stroke-width: 1.2; animation: fwPulse 2.6s ease-out infinite; }
+  .fw-pulse.delay { animation-delay: 1.3s; }
+  .fw-dot { fill: #ffffff; }
+  .fw-core { fill: #4da6ff; filter: drop-shadow(0 0 6px #4da6ff); }
+  @keyframes fwGlow { 0%,100% { opacity: 0.4; } 50% { opacity: 0.9; } }
+  @keyframes fwPulse { 0% { r: 3; opacity: 0.9; } 100% { r: 24; opacity: 0; } }
+  @media (max-width: 1280px) {
+    .hero-globe { width: 460px; height: 460px; right: 24px; opacity: 0.9; }
+  }
+  @media (max-width: 980px) {
+    .hero-globe { width: 360px; height: 360px; right: 16px; opacity: 0.55; }
+  }
+  @media (max-width: 720px) {
+    .hero-globe { display: none; }
+  }
 
   /* Hero sidebar specs */
   .hero-specs {
@@ -396,30 +437,48 @@
     margin: 24px 0 32px;
     aspect-ratio: 4/3;
     background:
-      repeating-linear-gradient(135deg, transparent 0 11px, rgba(0,32,96,0.06) 11px 12px),
-      linear-gradient(180deg, #eef1f7 0%, #dde2ec 100%);
-    border: 1px solid var(--line-2);
+      linear-gradient(180deg, #0a1730 0%, #050d22 100%);
+    background-image:
+      linear-gradient(to right, rgba(77,166,255,0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(77,166,255,0.07) 1px, transparent 1px),
+      linear-gradient(180deg, #0a1730 0%, #050d22 100%);
+    background-size: 24px 24px, 24px 24px, 100% 100%;
+    border: 1px solid #1a2a4a;
     position: relative;
     display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
     transition: border-color .3s;
+  }
+  .b-img svg.drone-art {
+    width: 78%; height: 78%; position: relative; z-index: 2;
+    filter: drop-shadow(0 0 12px rgba(77,166,255,0.35));
   }
   .b-img-label {
     font-family: var(--mono);
     font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 0.2em;
-    color: var(--mid);
-    padding: 6px 10px;
-    background: rgba(255,255,255,0.85);
-    border: 1px solid var(--line-2);
+    color: rgba(77,166,255,0.85);
+    padding: 5px 9px;
+    background: rgba(0,16,48,0.7);
+    border: 1px solid rgba(77,166,255,0.35);
+    position: absolute;
+    bottom: 12px; left: 12px;
+    z-index: 3;
   }
-  .b-img-corners { position: absolute; inset: 8px; pointer-events: none; }
+  .b-img-corners { position: absolute; inset: 8px; pointer-events: none; z-index: 3; }
   .b-img-corners::before, .b-img-corners::after {
-    content: ""; position: absolute; width: 12px; height: 12px;
-    border: 1px solid var(--mid); opacity: 0.6;
+    content: ""; position: absolute; width: 14px; height: 14px;
+    border: 1px solid rgba(77,166,255,0.6);
   }
   .b-img-corners::before { top: 0; left: 0; border-right: none; border-bottom: none; }
   .b-img-corners::after { bottom: 0; right: 0; border-left: none; border-top: none; }
+  .drone-art .wire { fill: none; stroke: #4da6ff; stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; }
+  .drone-art .wire-thin { fill: none; stroke: #4da6ff; stroke-width: 0.7; opacity: 0.65; }
+  .drone-art .fill-soft { fill: rgba(77,166,255,0.10); stroke: #4da6ff; stroke-width: 1; }
+  .drone-art .fill-mid { fill: rgba(77,166,255,0.22); stroke: #4da6ff; stroke-width: 1; }
+  .drone-art .accent-dot { fill: #4da6ff; }
+  .drone-art .label-mono { font-family: var(--mono); font-size: 7px; fill: rgba(77,166,255,0.7); letter-spacing: 0.15em; text-transform: uppercase; }
   .b-card h3 {
     font-family: var(--display);
     font-weight: 900;
@@ -726,7 +785,7 @@
       <a href="#markets">Markets</a>
       <a href="#contact">Contact</a>
     </div>
-    <a href="mailto:info@galaxy-mfg.com" class="nav-cta">Request Capabilities</a>
+    <a href="mailto:info@galaxy-mfg.com?subject=Galaxy%20Mfg%20Capabilities%20Request" class="nav-cta">Request Capabilities</a>
   </div>
 </nav>
 
@@ -741,6 +800,135 @@
     <div class="reticle r3"></div>
     <div class="reticle r4"></div>
   </div>
+
+  <div class="hero-globe" aria-hidden="true">
+    <svg id="globe-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="globeFill" cx="38%" cy="32%" r="75%">
+          <stop offset="0%" stop-color="#4da6ff" stop-opacity="0.18" />
+          <stop offset="55%" stop-color="#002060" stop-opacity="0.45" />
+          <stop offset="100%" stop-color="#000814" stop-opacity="0.7" />
+        </radialGradient>
+        <clipPath id="globeClip"><circle cx="200" cy="200" r="180" /></clipPath>
+      </defs>
+
+      <!-- Outer corner brackets -->
+      <g class="globe-corner">
+        <path d="M 12 40 L 12 12 L 40 12" />
+        <path d="M 360 12 L 388 12 L 388 40" />
+        <path d="M 388 360 L 388 388 L 360 388" />
+        <path d="M 40 388 L 12 388 L 12 360" />
+      </g>
+
+      <!-- Outer scale ring -->
+      <circle cx="200" cy="200" r="195" fill="none" stroke="#4da6ff" stroke-width="0.5" stroke-dasharray="1 5" opacity="0.5" />
+      <circle class="globe-sphere-outer" cx="200" cy="200" r="187" />
+
+      <g clip-path="url(#globeClip)">
+        <circle class="globe-sphere" cx="200" cy="200" r="180" />
+        <path id="globe-graticule" class="globe-graticule"></path>
+        <g id="globe-countries"></g>
+        <path id="globe-usa" class="globe-country usa"></path>
+        <path id="globe-tx" class="globe-state tx"></path>
+      </g>
+
+      <!-- Fort Worth marker (positioned by JS) -->
+      <g id="fw-group">
+        <circle class="fw-pulse" r="3" />
+        <circle class="fw-pulse delay" r="3" />
+        <circle class="fw-glow" r="6" />
+        <circle class="fw-dot" r="2.8" />
+        <circle class="fw-core" r="1.5" />
+      </g>
+      <path id="fw-leader" class="globe-label-line"></path>
+      <text class="globe-mono" x="234" y="56">FORT WORTH ◆ TX</text>
+      <text class="globe-mono dim" x="234" y="72">32.75° N · 97.33° W</text>
+
+      <!-- HUD ticks around limb -->
+      <g class="globe-tick">
+        <line x1="200" y1="6" x2="200" y2="14" />
+        <line x1="200" y1="386" x2="200" y2="394" />
+        <line x1="6" y1="200" x2="14" y2="200" />
+        <line x1="386" y1="200" x2="394" y2="200" />
+      </g>
+
+      <text class="globe-mono dim" x="12" y="402">SYS · GMFG-01</text>
+      <text class="globe-mono dim" x="320" y="402">TRACK · LIVE</text>
+    </svg>
+  </div>
+
+  <script src="https://unpkg.com/d3@7/dist/d3.min.js"></script>
+  <script src="https://unpkg.com/topojson-client@3/dist/topojson-client.min.js"></script>
+  <script>
+  (async () => {
+    if (!window.d3 || !window.topojson) return;
+    const svg = document.getElementById('globe-svg');
+    if (!svg) return;
+    const cx = 200, cy = 200, R = 180;
+    const projection = d3.geoOrthographic().scale(R).translate([cx, cy]).rotate([95, -22, 0]).clipAngle(90);
+    const path = d3.geoPath(projection);
+    const graticule = d3.geoGraticule10();
+    const FW = [-97.3308, 32.7555];
+
+    let world, states, countries, usa, texas;
+    try {
+      [world, states] = await Promise.all([
+        fetch('https://unpkg.com/world-atlas@2/countries-110m.json').then(r => r.json()),
+        fetch('https://unpkg.com/us-atlas@3/states-10m.json').then(r => r.json()),
+      ]);
+      countries = topojson.feature(world, world.objects.countries);
+      usa = countries.features.find(f => f.properties.name === 'United States of America');
+      texas = topojson.feature(states, states.objects.states).features.find(f => f.properties.name === 'Texas');
+    } catch (e) { console.warn('globe load failed', e); return; }
+
+    const gC = document.getElementById('globe-countries');
+    countries.features.forEach(f => {
+      if (f.properties.name === 'Antarctica') return;
+      const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      p.setAttribute('class', 'globe-country');
+      p.__feature = f;
+      gC.appendChild(p);
+    });
+    const usaEl = document.getElementById('globe-usa');
+    const txEl  = document.getElementById('globe-tx');
+    const gratEl = document.getElementById('globe-graticule');
+    const fwGroup = document.getElementById('fw-group');
+    const fwLeader = document.getElementById('fw-leader');
+
+    function update() {
+      gratEl.setAttribute('d', path(graticule) || '');
+      [...gC.children].forEach(p => p.setAttribute('d', path(p.__feature) || ''));
+      usaEl.setAttribute('d', path(usa) || '');
+      txEl.setAttribute('d', path(texas) || '');
+      const r = projection.rotate();
+      const center = [-r[0], -r[1]];
+      const visible = d3.geoDistance(FW, center) < Math.PI / 2;
+      if (visible) {
+        const [x, y] = projection(FW);
+        fwGroup.setAttribute('transform', `translate(${x},${y})`);
+        fwGroup.setAttribute('opacity', '1');
+        fwLeader.setAttribute('d', `M ${x} ${y} L 228 60 L 310 60`);
+        fwLeader.setAttribute('opacity', '0.7');
+      } else {
+        fwGroup.setAttribute('opacity', '0');
+        fwLeader.setAttribute('opacity', '0');
+      }
+    }
+    update();
+
+    let last = performance.now();
+    function tick(now) {
+      const dt = (now - last) / 1000;
+      last = now;
+      const r = projection.rotate();
+      // 60s per revolution = 6 deg/sec
+      projection.rotate([r[0] + dt * 6, r[1], r[2]]);
+      update();
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  })();
+  </script>
 
   <div class="hero-specs">
     <div>LAT 32.7555° N</div>
@@ -759,12 +947,12 @@
       <span>UAS · COMPONENTS · SYSTEMS</span>
     </div>
 
-    <h1>Galaxy<br>Mfg<span class="accent">.</span></h1>
+    <h1>Galaxy<br>Manufacturing<span class="accent"></span></h1>
 
     <p class="hero-tagline">US-Made critical drone components<br>&amp; complete flight-ready systems.</p>
 
     <div class="hero-actions">
-      <a href="mailto:info@galaxy-mfg.com" class="btn btn-primary">Request Capabilities <span class="arrow">→</span></a>
+      <a href="mailto:info@galaxy-mfg.com?subject=Galaxy%20Mfg%20Quote%20Request" class="btn btn-primary">Get a Quote <span class="arrow">→</span></a>
       <a href="#build" class="btn btn-ghost">Explore Platforms <span class="arrow">↓</span></a>
     </div>
   </div>
@@ -830,6 +1018,67 @@
         <div class="b-num">/ 01</div>
         <div class="b-img">
           <div class="b-img-corners"></div>
+          <svg class="drone-art" viewBox="0 0 320 240" aria-hidden="true">
+            <!-- Quadrotor 3/4 view: central body + 4 booms + 4 rotors -->
+            <g transform="translate(160 130)">
+              <!-- Booms (X frame, 3/4 perspective) -->
+              <line class="wire" x1="0" y1="0" x2="-95" y2="-50" />
+              <line class="wire" x1="0" y1="0" x2="95" y2="-50" />
+              <line class="wire" x1="0" y1="0" x2="-95" y2="45" />
+              <line class="wire" x1="0" y1="0" x2="95" y2="45" />
+              <!-- Boom thickness lines -->
+              <line class="wire-thin" x1="4" y1="-2" x2="-91" y2="-52" />
+              <line class="wire-thin" x1="4" y1="-2" x2="99" y2="-52" />
+              <line class="wire-thin" x1="-4" y1="2" x2="-99" y2="43" />
+              <line class="wire-thin" x1="-4" y1="2" x2="91" y2="43" />
+              <!-- Central hex body -->
+              <polygon class="fill-mid" points="-30,-14 -14,-26 14,-26 30,-14 30,14 14,26 -14,26 -30,14" />
+              <polygon class="wire-thin" points="-22,-10 -10,-18 10,-18 22,-10 22,10 10,18 -10,18 -22,10" fill="none" />
+              <circle class="accent-dot" cx="0" cy="0" r="3" />
+              <!-- Camera gimbal under body -->
+              <path class="fill-soft" d="M -10 22 L 10 22 L 8 32 L -8 32 Z" />
+              <circle class="wire" cx="0" cy="30" r="4" />
+              <!-- Rotors (ellipses for 3/4 perspective) -->
+              <g>
+                <ellipse class="fill-soft" cx="-95" cy="-50" rx="34" ry="10" />
+                <ellipse class="wire-thin" cx="-95" cy="-50" rx="28" ry="7" />
+                <line class="wire" x1="-125" y1="-50" x2="-65" y2="-50" />
+                <line class="wire-thin" x1="-115" y1="-54" x2="-75" y2="-46" />
+                <circle class="accent-dot" cx="-95" cy="-50" r="2" />
+              </g>
+              <g>
+                <ellipse class="fill-soft" cx="95" cy="-50" rx="34" ry="10" />
+                <ellipse class="wire-thin" cx="95" cy="-50" rx="28" ry="7" />
+                <line class="wire" x1="65" y1="-50" x2="125" y2="-50" />
+                <line class="wire-thin" x1="75" y1="-54" x2="115" y2="-46" />
+                <circle class="accent-dot" cx="95" cy="-50" r="2" />
+              </g>
+              <g>
+                <ellipse class="fill-soft" cx="-95" cy="45" rx="36" ry="11" />
+                <ellipse class="wire-thin" cx="-95" cy="45" rx="30" ry="7" />
+                <line class="wire" x1="-127" y1="45" x2="-63" y2="45" />
+                <line class="wire-thin" x1="-117" y1="41" x2="-73" y2="49" />
+                <circle class="accent-dot" cx="-95" cy="45" r="2" />
+              </g>
+              <g>
+                <ellipse class="fill-soft" cx="95" cy="45" rx="36" ry="11" />
+                <ellipse class="wire-thin" cx="95" cy="45" rx="30" ry="7" />
+                <line class="wire" x1="63" y1="45" x2="127" y2="45" />
+                <line class="wire-thin" x1="73" y1="41" x2="117" y2="49" />
+                <circle class="accent-dot" cx="95" cy="45" r="2" />
+              </g>
+              <!-- Landing skids -->
+              <line class="wire-thin" x1="-22" y1="32" x2="-22" y2="48" />
+              <line class="wire-thin" x1="22" y1="32" x2="22" y2="48" />
+              <line class="wire-thin" x1="-30" y1="48" x2="30" y2="48" />
+            </g>
+            <!-- Schematic labels -->
+            <text class="label-mono" x="14" y="22">FIG. 01 · QUADROTOR</text>
+            <text class="label-mono" x="230" y="22">SCALE 1:8</text>
+            <line class="wire-thin" x1="50" y1="80" x2="55" y2="80" />
+            <line class="wire-thin" x1="50" y1="77" x2="50" y2="83" />
+            <line class="wire-thin" x1="55" y1="77" x2="55" y2="83" />
+          </svg>
           <div class="b-img-label">AIRFRAME · CARBON / ALUMINUM</div>
         </div>
         <h3>UAS Components</h3>
@@ -844,6 +1093,53 @@
         <div class="b-num">/ 02</div>
         <div class="b-img">
           <div class="b-img-corners"></div>
+          <svg class="drone-art" viewBox="0 0 320 240" aria-hidden="true">
+            <!-- VTOL bird-inspired top-down: swept wings + fuselage + tail + rotors -->
+            <g transform="translate(160 125)">
+              <!-- Swept wing -->
+              <path class="fill-mid" d="M 0 -8 L -135 28 L -120 38 L -40 18 L 0 16 L 40 18 L 120 38 L 135 28 Z" />
+              <!-- Wing detail lines -->
+              <line class="wire-thin" x1="-130" y1="30" x2="-30" y2="6" />
+              <line class="wire-thin" x1="130" y1="30" x2="30" y2="6" />
+              <line class="wire-thin" x1="-100" y1="24" x2="-100" y2="34" />
+              <line class="wire-thin" x1="-70" y1="18" x2="-70" y2="30" />
+              <line class="wire-thin" x1="100" y1="24" x2="100" y2="34" />
+              <line class="wire-thin" x1="70" y1="18" x2="70" y2="30" />
+              <!-- Fuselage (top-down, pointed nose) -->
+              <path class="fill-soft" d="M 0 -55 L 8 -30 L 10 0 L 8 30 L 0 60 L -8 30 L -10 0 L -8 -30 Z" />
+              <line class="wire-thin" x1="0" y1="-55" x2="0" y2="60" />
+              <!-- Cockpit / sensor dome -->
+              <ellipse class="fill-mid" cx="0" cy="-25" rx="6" ry="10" />
+              <circle class="accent-dot" cx="0" cy="-25" r="2.5" />
+              <!-- Tail / V-stab -->
+              <path class="wire" d="M -14 58 L 0 48 L 14 58" />
+              <line class="wire-thin" x1="-8" y1="54" x2="8" y2="54" />
+              <!-- VTOL rotor pods on wings -->
+              <g>
+                <ellipse class="fill-soft" cx="-95" cy="23" rx="18" ry="6" />
+                <ellipse class="wire-thin" cx="-95" cy="23" rx="14" ry="4" />
+                <line class="wire" x1="-113" y1="23" x2="-77" y2="23" />
+                <line class="wire-thin" x1="-95" y1="19" x2="-95" y2="27" />
+                <circle class="accent-dot" cx="-95" cy="23" r="1.6" />
+              </g>
+              <g>
+                <ellipse class="fill-soft" cx="95" cy="23" rx="18" ry="6" />
+                <ellipse class="wire-thin" cx="95" cy="23" rx="14" ry="4" />
+                <line class="wire" x1="77" y1="23" x2="113" y2="23" />
+                <line class="wire-thin" x1="95" y1="19" x2="95" y2="27" />
+                <circle class="accent-dot" cx="95" cy="23" r="1.6" />
+              </g>
+              <!-- Wingtip pods -->
+              <circle class="accent-dot" cx="-130" cy="30" r="2" />
+              <circle class="accent-dot" cx="130" cy="30" r="2" />
+              <!-- Center pusher prop -->
+              <ellipse class="wire-thin" cx="0" cy="68" rx="22" ry="3" />
+            </g>
+            <text class="label-mono" x="14" y="22">FIG. 02 · VTOL PLATFORM</text>
+            <text class="label-mono" x="230" y="22">CLASS II</text>
+            <line class="wire-thin" x1="30" y1="205" x2="50" y2="205" />
+            <text class="label-mono" x="55" y="208">ISR · CARGO</text>
+          </svg>
           <div class="b-img-label">PLATFORM · TACTICAL CLASS</div>
         </div>
         <h3>Complete Systems</h3>
@@ -858,6 +1154,68 @@
         <div class="b-num">/ 03</div>
         <div class="b-img">
           <div class="b-img-corners"></div>
+          <svg class="drone-art" viewBox="0 0 320 240" aria-hidden="true">
+            <!-- Airship/blimp side profile with ducted fans -->
+            <g transform="translate(160 120)">
+              <!-- Envelope (elongated ellipse) -->
+              <ellipse class="fill-mid" cx="0" cy="0" rx="125" ry="38" />
+              <!-- Envelope longitudinal seams -->
+              <path class="wire-thin" d="M -125 0 Q 0 -12 125 0" fill="none" />
+              <path class="wire-thin" d="M -125 0 Q 0 12 125 0" fill="none" />
+              <path class="wire-thin" d="M -125 0 Q 0 -28 125 0" fill="none" />
+              <path class="wire-thin" d="M -125 0 Q 0 28 125 0" fill="none" />
+              <!-- Vertical frame ribs -->
+              <ellipse class="wire-thin" cx="-80" cy="0" rx="5" ry="30" fill="none" />
+              <ellipse class="wire-thin" cx="-40" cy="0" rx="5" ry="36" fill="none" />
+              <ellipse class="wire-thin" cx="0" cy="0" rx="5" ry="38" fill="none" />
+              <ellipse class="wire-thin" cx="40" cy="0" rx="5" ry="36" fill="none" />
+              <ellipse class="wire-thin" cx="80" cy="0" rx="5" ry="30" fill="none" />
+              <!-- Nose cone marker -->
+              <line class="wire" x1="-125" y1="0" x2="-115" y2="0" />
+              <circle class="accent-dot" cx="-122" cy="0" r="2" />
+              <!-- Tail fins -->
+              <path class="fill-soft" d="M 110 -30 L 138 -42 L 130 -8 Z" />
+              <path class="fill-soft" d="M 110 30 L 138 42 L 130 8 Z" />
+              <path class="wire" d="M 110 0 L 140 0" />
+              <!-- Gondola underneath -->
+              <path class="fill-soft" d="M -38 38 L 38 38 L 32 56 L -32 56 Z" />
+              <line class="wire-thin" x1="-30" y1="44" x2="30" y2="44" />
+              <line class="wire-thin" x1="-26" y1="50" x2="26" y2="50" />
+              <!-- Window dots on gondola -->
+              <circle class="accent-dot" cx="-18" cy="47" r="1.4" />
+              <circle class="accent-dot" cx="-6" cy="47" r="1.4" />
+              <circle class="accent-dot" cx="6" cy="47" r="1.4" />
+              <circle class="accent-dot" cx="18" cy="47" r="1.4" />
+              <!-- Ducted fan port -->
+              <g>
+                <circle class="fill-soft" cx="-65" cy="50" r="12" />
+                <circle class="wire-thin" cx="-65" cy="50" r="8" />
+                <line class="wire-thin" x1="-77" y1="50" x2="-53" y2="50" />
+                <line class="wire-thin" x1="-65" y1="38" x2="-65" y2="62" />
+                <line class="wire-thin" x1="-73" y1="42" x2="-57" y2="58" />
+                <line class="wire-thin" x1="-57" y1="42" x2="-73" y2="58" />
+                <circle class="accent-dot" cx="-65" cy="50" r="1.6" />
+              </g>
+              <!-- Ducted fan starboard -->
+              <g>
+                <circle class="fill-soft" cx="65" cy="50" r="12" />
+                <circle class="wire-thin" cx="65" cy="50" r="8" />
+                <line class="wire-thin" x1="53" y1="50" x2="77" y2="50" />
+                <line class="wire-thin" x1="65" y1="38" x2="65" y2="62" />
+                <line class="wire-thin" x1="57" y1="42" x2="73" y2="58" />
+                <line class="wire-thin" x1="73" y1="42" x2="57" y2="58" />
+                <circle class="accent-dot" cx="65" cy="50" r="1.6" />
+              </g>
+              <!-- Top mast antenna -->
+              <line class="wire" x1="0" y1="-38" x2="0" y2="-52" />
+              <circle class="accent-dot" cx="0" cy="-54" r="2" />
+            </g>
+            <text class="label-mono" x="14" y="22">FIG. 03 · LIFT PLATFORM</text>
+            <text class="label-mono" x="230" y="22">L · 13.4 m</text>
+            <line class="wire-thin" x1="35" y1="210" x2="285" y2="210" stroke-dasharray="2 3" />
+            <line class="wire-thin" x1="35" y1="206" x2="35" y2="214" />
+            <line class="wire-thin" x1="285" y1="206" x2="285" y2="214" />
+          </svg>
           <div class="b-img-label">SUPPLY CHAIN · DOMESTIC</div>
         </div>
         <h3>US Supply Chain</h3>
@@ -925,8 +1283,8 @@
       <div class="eyebrow"><span style="font-family:var(--mono);color:var(--ink);font-weight:500;margin-right:4px;">04</span> PARTNER WITH GALAXY</div>
       <h2>Building the <em>next generation</em> of US-made unmanned systems.</h2>
       <div style="margin-top: 36px; display: flex; gap: 14px; flex-wrap: wrap;">
-        <a href="mailto:info@galaxy-mfg.com" class="btn btn-primary">Request Capabilities <span class="arrow">→</span></a>
-        <a href="mailto:info@galaxy-mfg.com" class="btn" style="background:transparent; color: var(--ink); border: 1px solid var(--line-2);">Contact Founders <span class="arrow">→</span></a>
+        <a href="mailto:info@galaxy-mfg.com?subject=Galaxy%20Mfg%20Capabilities%20Request" class="btn btn-primary">Request Capabilities <span class="arrow">→</span></a>
+        <a href="mailto:jason.white@galaxy-mfg.com" class="btn" style="background:transparent; color: var(--ink); border: 1px solid var(--line-2);">Contact Founders <span class="arrow">→</span></a>
       </div>
     </div>
     <aside class="cta-side">
@@ -936,7 +1294,7 @@
       </div>
       <div class="cta-row">
         <span class="label">Direct</span>
-        <a class="value" href="mailto:info@galaxy-mfg.com">info@galaxy-mfg.com</a>
+        <a class="value" href="mailto:jason.white@galaxy-mfg.com">jason.white@galaxy-mfg.com</a>
       </div>
       <div class="cta-row">
         <span class="label">Inquiries</span>
@@ -982,7 +1340,7 @@
         <ul>
           <li><a href="#mission">Mission</a></li>
           <li><a href="#contact">Contact</a></li>
-          <li><a href="mailto:info@galaxy-mfg.com">info@galaxy-mfg.com</a></li>
+          <li><a href="mailto:jason.white@galaxy-mfg.com">jason.white@galaxy-mfg.com</a></li>
         </ul>
       </div>
     </div>
